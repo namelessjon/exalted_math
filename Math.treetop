@@ -1,0 +1,107 @@
+grammar ExaltedMaths
+
+  rule additive
+    multitive space* '+' space* additive {
+      def value
+        multitive.value + additive.value
+      end
+   }
+  / multitive space* '-' space* additive {
+    def value
+      multitive.value - additive.value
+    end
+  }
+  / multitive
+  end
+
+  rule multitive
+    primary space* '*' space* multitive {
+       def value
+         primary.value * multitive.value
+       end
+    }
+    /
+    primary space* '/' space* multitive {
+       def value
+         primary.value / multitive.value
+       end
+    }
+    / primary
+  end
+
+  rule primary
+    '(' space* additive space* ')' {
+        def value
+          additive.value
+        end
+    }
+    / number / spec / max / min / stat
+  end
+
+  rule spec
+    [Ss] 'pec' 'iality'? ':"' speciality '"' {
+        def value
+          puts speciality.text_value
+          1
+        end
+    }
+  end
+
+  rule speciality
+    [^"]+
+  end
+
+  rule max
+    'max' ( '[' number ']' )?  '(' space* list space*  ')' {
+       def value
+           list.values.max
+       end
+    }
+  end
+
+  rule min
+    'min(' space* list space*  ')' {
+       def value
+         list.values.min
+       end
+    }
+  end
+
+  rule list
+    ( ( number / stat ) space* ',' space* )* space* ( number / stat ) {
+        def dig_values(values, elements)
+          elements.each do |elem|
+            values << elem.value if elem.respond_to?(:value)
+            dig_values(values, elem.elements) if elem.elements
+          end
+          values
+        end
+
+        def values
+          v = []
+          dig_values(v, elements)
+          v
+        end
+    }
+  end
+
+  rule space
+    ( " " / "\t" )+
+  end
+
+  rule number
+    [1-9] [0-9]* {
+        def value
+          text_value.to_i
+        end
+    }
+  end
+
+  rule stat
+    [A-Za-z]+ {
+        def value
+          input.context
+        end
+    }
+  end
+end
