@@ -147,7 +147,6 @@ describe "Exalted::Ast" do
     Exalted::Ast.simplify(@add_foo).should == Exalted::Ast.new(['add', @three, @foo])
   end
   it "A constant branches are simplified" do
-    p @nested, Exalted::Ast.new(['mul', Exalted::Ast.new(['num', 10]), @sub_foo])
     Exalted::Ast.simplify(@nested).should == Exalted::Ast.new(['mul', Exalted::Ast.new(['num', 10]), @sub_foo])
   end
 end
