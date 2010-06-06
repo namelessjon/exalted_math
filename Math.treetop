@@ -1,14 +1,15 @@
-grammar ExaltedMaths
+module Exalted
+grammar Maths
 
   rule additive
     multitive space* '+' space* additive {
-      def value
-        multitive.value + additive.value
+      def ast
+        Ast.new(['add', multitive.ast, additive.ast ])
       end
    }
   / multitive space* '-' space* additive {
-    def value
-      multitive.value - additive.value
+    def ast
+      Ast.new(['sub', multitive.ast, additive.ast ])
     end
   }
   / multitive
@@ -16,14 +17,14 @@ grammar ExaltedMaths
 
   rule multitive
     primary space* '*' space* multitive {
-       def value
-         primary.value * multitive.value
+       def ast
+         Ast.new(['mul', primary.ast, multitive.ast ])
        end
     }
     /
     primary space* '/' space* multitive {
-       def value
-         primary.value / multitive.value
+       def ast
+         Ast.new(['div', primary.ast, multitive.ast ])
        end
     }
     / primary
@@ -31,8 +32,8 @@ grammar ExaltedMaths
 
   rule primary
     '(' space* additive space* ')' {
-        def value
-          additive.value
+        def ast
+          additive.ast
         end
     }
     / number / spec / max / min / stat
@@ -40,18 +41,18 @@ grammar ExaltedMaths
 
   rule spec
     [Ss] 'pec' 'iality'? ':"' speciality:[^"]+ '"' {
-        def value
-          1
-        end
+      def value
+        speciality.text_value
+      end
+
+      def ast
+        Ast.new(['spec', value])
+      end
     }
   end
 
   rule max
     ( 'max' / 'highest' ) num:(  '[' number ']' )?  '(' space* list space*  ')' {
-       def value
-         list.values.sort[-count, count].inject(0) { |fin, val| fin += val }
-       end
-
        def count
          if num.elements
            num.elements.detect { |e| e.respond_to?(:value) }.value
@@ -59,31 +60,42 @@ grammar ExaltedMaths
            1
          end
        end
+
+       def ast
+         Ast.new(['max', count, list.asts ])
+       end
     }
   end
 
   rule min
-    'min(' space* list space*  ')' {
-       def value
-         list.values.min
+    ( 'min' / 'lowest' ) num:(  '[' number ']' )?  '(' space* list space*  ')' {
+       def count
+         if num.elements
+           num.elements.detect { |e| e.respond_to?(:value) }.value
+         else
+           1
+         end
+       end
+       def ast
+         Ast.new(['min', count, list.asts ])
        end
     }
   end
 
   rule list
     ( ( number / stat ) space* ',' space* )* space* ( number / stat ) {
-        def dig_values(values, elements)
+        def dig(values, elements)
           elements.each do |elem|
-            values << elem.value if elem.respond_to?(:value)
-            dig_values(values, elem.elements) if elem.elements
+            values << elem if elem.respond_to?(:value)
+            dig(values, elem.elements) if elem.elements
           end
           values
         end
 
-        def values
-          v = []
-          dig_values(v, elements)
-          v
+        def asts
+          elem_list = []
+          dig(elem_list, elements)
+          elem_list.map! { |e| e.ast }
         end
     }
   end
@@ -101,14 +113,21 @@ grammar ExaltedMaths
         def neg
           (negative.elements) ? -1 : 1
         end
+        def ast
+          Ast.new(['num', value])
+        end
     }
   end
 
   rule stat
     [A-Za-z]+ {
         def value
-          input.context
+          text_value.downcase
+        end
+        def ast
+          Ast.new(['stat', value])
         end
     }
   end
+end
 end
