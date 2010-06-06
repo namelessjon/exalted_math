@@ -93,9 +93,13 @@ grammar ExaltedMaths
   end
 
   rule number
-    [1-9] [0-9]* {
+    negative:('-')? [1-9] [0-9]* {
         def value
-          text_value.to_i
+          text_value.to_i*neg
+        end
+
+        def neg
+          (negative.elements) ? -1 : 1
         end
     }
   end
