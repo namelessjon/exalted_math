@@ -3,12 +3,15 @@
 require 'spec_helper'
 require 'exalted_math/ast'
 
+include Exalted
+
+
 describe "Exalted::Ast" do
   before do
     @three    = Exalted::Ast.new('num', 3 )
     @seven    = Exalted::Ast.new('num', 7 )
     @foo      = Exalted::Ast.new('stat', 'foo')
-    @bar      = Exalted::Ast.new('stat', 'bar')
+    @bar      = Exalted::Ast.new('spec', 'bar')
     @invalid  = Exalted::Ast.new('stat', 'invalid')
     @add      = Exalted::Ast.new('add', @three, @seven)
     @sub      = Exalted::Ast.new('sub', @three, @seven)
@@ -20,6 +23,34 @@ describe "Exalted::Ast" do
     @div_foo  = Exalted::Ast.new('div', @three, @foo)
     @nested   = Exalted::Ast.new('mul', @add, @sub_foo)
     @context  = { 'foo' => 3, 'bar' => 4 }
+  end
+
+  it ".num makes a number" do
+    @three.should == Ast.num(3)
+  end
+
+  it ".stat makes a stat" do
+    @foo.should == Ast.stat('foo')
+  end
+
+  it ".spec makes a spec" do
+    @bar.should == Ast.spec('bar')
+  end
+
+  it ".add makes an add" do
+    @add.should == Ast.add(@three, @seven)
+  end
+
+  it ".sub makes an sub" do
+    @sub.should == Ast.sub(@three, @seven)
+  end
+
+  it ".mul makes an mul" do
+    @mul.should == Ast.mul(@three, @seven)
+  end
+
+  it ".div makes an div" do
+    @div.should == Ast.div(@seven, @three)
   end
 
   it "a number is constant" do

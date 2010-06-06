@@ -129,6 +129,87 @@ module Exalted
       end
     end
 
+    # Create a new num node
+    #
+    # @param value [Integer] The value of the new node
+    #
+    # @return [Ast] A num Ast Node
+    def self.num(value)
+      new('num', value)
+    end
+
+    # Create a new stat node
+    #
+    # @param value [String] The value of the new node
+    #
+    # @return [Ast] A stat Ast Node
+    def self.stat(value)
+      new('stat', value)
+    end
+
+    # Create a new spec node
+    #
+    # @param value [String] The value of the new node
+    #
+    # @return [Ast] A spec Ast Node
+    def self.spec(value)
+      new('spec', value)
+    end
+
+    # Create a new add node
+    #
+    # @param left [Ast] The left node of the add
+    # @param right [Ast] The right node of the add
+    # @return [Ast] An add Ast Node
+    def self.add(left, right)
+      new('add', left, right)
+    end
+
+    # Create a new sub node
+    #
+    # @param left [Ast] The left node of the sub
+    # @param right [Ast] The right node of the sub
+    # @return [Ast] An sub Ast Node
+    def self.sub(left, right)
+      new('sub', left, right)
+    end
+
+    # Create a new mul node
+    #
+    # @param left [Ast] The left node of the mul
+    # @param right [Ast] The right node of the mul
+    # @return [Ast] An mul Ast Node
+    def self.mul(left, right)
+      new('mul', left, right)
+    end
+
+    # Create a new div node
+    #
+    # @param left [Ast] The left node of the div
+    # @param right [Ast] The right node of the div
+    # @return [Ast] An div Ast Node
+    def self.div(left, right)
+      new('div', left, right)
+    end
+
+    # Create a new min node
+    #
+    # @param count [Integer] Number of values to sum for the min
+    # @param list  [Array]  Array of ASTs to calculate the min from
+    # @return [Ast] A min Ast Node
+    def self.min(count, list)
+      new('min', count, list)
+    end
+
+    # Create a new max node
+    #
+    # @param count [Integer] Number of values to sum for the max
+    # @param list  [Array]  Array of ASTs to calculate the max from
+    # @return [Ast] A max Ast Node
+    def self.max(count, list)
+      new('max', count, list)
+    end
+
     def self.from_array(array)
       case array[0]
       when 'mul', 'div', 'add', 'sub'
