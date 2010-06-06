@@ -29,3 +29,9 @@ rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
 
+file 'lib/exalted_math/math.rb' => 'lib/exalted_math/math.treetop' do
+  sh "tt lib/exalted_math/math.treetop"
+end
+
+desc "Regenerate the treetop file"
+task :treetop => 'lib/exalted_math/math.rb'
