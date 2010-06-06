@@ -41,11 +41,11 @@ array class, which makes it very easy to serialize.
 The syntax supported by the parser is pretty simple.  In the examples above,
 almost all of it has been demonstrated.
 
-[0-9+]                    A number
-[[A-z+]                   A stat.  This is looked up from the context.
-[spec:"..."]              A speciality. This is looked up from the context.
-[highest(list,...)]       Has the value of the highest component.
-[highest[n](list,...)]    Has the value of the highest n components.
-[lowest(list,...)]        Has the value of the lowest component.
-[lowest[2](list,...)]     Has the value of the lowest n componentd.
+[[0-9]+]                        A number
+[[A-Za-z]+]                     A stat.  This is looked up from the context.
+[spec:"..."]                    A speciality. This is looked up from the context.
+[highest(stat|number,...)]      Has the value of the highest component.
+[highest[n](stat|number,...)]   Has the value of the highest n components.
+[lowest(stat|number,...)]       Has the value of the lowest component.
+[lowest[2](stat|number,...)]    Has the value of the lowest n components.
 
