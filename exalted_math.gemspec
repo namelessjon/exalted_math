@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{exalted_math}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jonathan Stott"]
@@ -22,7 +22,7 @@ This intended to aid in evaluating simple calculations which appear on character
      "README.rdoc",
      "Rakefile",
      "VERSION",
-     "exalted-math-parser.gemspec",
+     "exalted_math.gemspec",
      "lib/exalted_math.rb",
      "lib/exalted_math/ast.rb",
      "lib/exalted_math/math.rb",
