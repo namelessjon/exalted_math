@@ -4,7 +4,7 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{exalted-math-parser}
+  s.name = %q{exalted_math}
   s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
@@ -18,19 +18,20 @@ This intended to aid in evaluating simple calculations which appear on character
     "README.rdoc"
   ]
   s.files = [
-    "README.rdoc",
+    ".gitignore",
+     "README.rdoc",
      "Rakefile",
      "VERSION",
+     "exalted-math-parser.gemspec",
      "lib/exalted_math.rb",
      "lib/exalted_math/ast.rb",
      "lib/exalted_math/math.rb",
      "lib/exalted_math/math.treetop",
      "spec/ast_spec.rb",
      "spec/parser_spec.rb",
-     "spec/spec_helper.rb",
-     "treetop_test.rb"
+     "spec/spec_helper.rb"
   ]
-  s.homepage = %q{http://github.com/namelessjon/exalted-math-parser}
+  s.homepage = %q{http://github.com/namelessjon/exalted_math}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
