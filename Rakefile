@@ -13,11 +13,11 @@ task :default => :spec
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "exalted-math-parser"
+    gem.name = "exalted_math"
     gem.summary = "Parsing and evaluation of simple maths expressions for Exalted"
     gem.description = "Parsing and evaluation of simple maths expressions for Exalted\n\nThis intended to aid in evaluating simple calculations which appear on character sheets, especially for Exalted."
     gem.email = "jonathan.stott@gmail.com"
-    gem.homepage = "http://github.com/namelessjon/exalted-math-parser"
+    gem.homepage = "http://github.com/namelessjon/exalted_math"
     gem.authors = ["Jonathan Stott"]
     gem.add_dependency "treetop", "~> 1.4"
     gem.add_development_dependency "bacon"
