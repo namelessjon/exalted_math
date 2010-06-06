@@ -4,12 +4,12 @@ grammar Maths
   rule additive
     multitive space* '+' space* additive {
       def ast
-        Ast.new(['add', multitive.ast, additive.ast ])
+        Ast.new('add', multitive.ast, additive.ast )
       end
    }
   / multitive space* '-' space* additive {
     def ast
-      Ast.new(['sub', multitive.ast, additive.ast ])
+      Ast.new('sub', multitive.ast, additive.ast )
     end
   }
   / multitive
@@ -18,13 +18,13 @@ grammar Maths
   rule multitive
     primary space* '*' space* multitive {
        def ast
-         Ast.new(['mul', primary.ast, multitive.ast ])
+         Ast.new('mul', primary.ast, multitive.ast )
        end
     }
     /
     primary space* '/' space* multitive {
        def ast
-         Ast.new(['div', primary.ast, multitive.ast ])
+         Ast.new('div', primary.ast, multitive.ast )
        end
     }
     / primary
@@ -46,7 +46,7 @@ grammar Maths
       end
 
       def ast
-        Ast.new(['spec', value])
+        Ast.new('spec', value)
       end
     }
   end
@@ -62,7 +62,7 @@ grammar Maths
        end
 
        def ast
-         Ast.new(['max', count, list.asts ])
+         Ast.new('max', count, list.asts )
        end
     }
   end
@@ -77,7 +77,7 @@ grammar Maths
          end
        end
        def ast
-         Ast.new(['min', count, list.asts ])
+         Ast.new('min', count, list.asts )
        end
     }
   end
@@ -114,7 +114,7 @@ grammar Maths
           (negative.elements) ? -1 : 1
         end
         def ast
-          Ast.new(['num', value])
+          Ast.new('num', value)
         end
     }
   end
@@ -125,7 +125,7 @@ grammar Maths
           text_value.downcase
         end
         def ast
-          Ast.new(['stat', value])
+          Ast.new('stat', value)
         end
     }
   end

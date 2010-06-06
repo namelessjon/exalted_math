@@ -5,20 +5,20 @@ require 'exalted_math/ast'
 
 describe "Exalted::Ast" do
   before do
-    @three    = Exalted::Ast.new(['num', 3 ])
-    @seven    = Exalted::Ast.new(['num', 7 ])
-    @foo      = Exalted::Ast.new(['stat', 'foo'])
-    @bar      = Exalted::Ast.new(['stat', 'bar'])
-    @invalid  = Exalted::Ast.new(['stat', 'invalid'])
-    @add      = Exalted::Ast.new(['add', @three, @seven])
-    @sub      = Exalted::Ast.new(['sub', @three, @seven])
-    @mul      = Exalted::Ast.new(['mul', @three, @seven])
-    @div      = Exalted::Ast.new(['div', @seven, @three])
-    @add_foo  = Exalted::Ast.new(['add', @three, @foo])
-    @sub_foo  = Exalted::Ast.new(['sub', @three, @foo])
-    @mul_foo  = Exalted::Ast.new(['mul', @three, @foo])
-    @div_foo  = Exalted::Ast.new(['div', @three, @foo])
-    @nested   = Exalted::Ast.new(['mul', @add, @sub_foo])
+    @three    = Exalted::Ast.new('num', 3 )
+    @seven    = Exalted::Ast.new('num', 7 )
+    @foo      = Exalted::Ast.new('stat', 'foo')
+    @bar      = Exalted::Ast.new('stat', 'bar')
+    @invalid  = Exalted::Ast.new('stat', 'invalid')
+    @add      = Exalted::Ast.new('add', @three, @seven)
+    @sub      = Exalted::Ast.new('sub', @three, @seven)
+    @mul      = Exalted::Ast.new('mul', @three, @seven)
+    @div      = Exalted::Ast.new('div', @seven, @three)
+    @add_foo  = Exalted::Ast.new('add', @three, @foo)
+    @sub_foo  = Exalted::Ast.new('sub', @three, @foo)
+    @mul_foo  = Exalted::Ast.new('mul', @three, @foo)
+    @div_foo  = Exalted::Ast.new('div', @three, @foo)
+    @nested   = Exalted::Ast.new('mul', @add, @sub_foo)
     @context  = { 'foo' => 3, 'bar' => 4 }
   end
 
@@ -81,19 +81,19 @@ describe "Exalted::Ast" do
     Exalted::Ast.valid?(@div, @context.keys).should.be.true
   end
   it "An add is invalid if one key is invalid" do
-    @add = Exalted::Ast.new(['add', @three, @invalid])
+    @add = Exalted::Ast.new('add', @three, @invalid)
     Exalted::Ast.valid?(@add, @context.keys).should.not.be.true
   end
   it "An sub is invalid if one key is invalid" do
-    @sub = Exalted::Ast.new(['sub', @three, @invalid])
+    @sub = Exalted::Ast.new('sub', @three, @invalid)
     Exalted::Ast.valid?(@sub, @context.keys).should.not.be.true
   end
   it "An mul is invalid if one key is invalid" do
-    @mul = Exalted::Ast.new(['mul', @three, @invalid])
+    @mul = Exalted::Ast.new('mul', @three, @invalid)
     Exalted::Ast.valid?(@mul, @context.keys).should.not.be.true
   end
   it "An div is invalid if one key is invalid" do
-    @div = Exalted::Ast.new(['div', @three, @invalid])
+    @div = Exalted::Ast.new('div', @three, @invalid)
     Exalted::Ast.valid?(@div, @context.keys).should.not.be.true
   end
 
@@ -128,26 +128,26 @@ describe "Exalted::Ast" do
   end
 
   it "has sane equality behaviour" do
-    @three.should == Exalted::Ast.new(['num', 3])
+    @three.should == Exalted::Ast.new('num', 3)
   end
 
   it "can simplify a constant add" do
-    Exalted::Ast.simplify(@add).should == Exalted::Ast.new(['num', 10])
+    Exalted::Ast.simplify(@add).should == Exalted::Ast.new('num', 10)
   end
 
   it "A number is simple" do
-    Exalted::Ast.simplify(@three).should == Exalted::Ast.new(['num', 3])
+    Exalted::Ast.simplify(@three).should == Exalted::Ast.new('num', 3)
   end
 
   it "A stat is simple" do
-    Exalted::Ast.simplify(@foo).should == Exalted::Ast.new(['stat', 'foo'])
+    Exalted::Ast.simplify(@foo).should == Exalted::Ast.new('stat', 'foo')
   end
 
   it "A non-constant add isn't simplified" do
-    Exalted::Ast.simplify(@add_foo).should == Exalted::Ast.new(['add', @three, @foo])
+    Exalted::Ast.simplify(@add_foo).should == Exalted::Ast.new('add', @three, @foo)
   end
   it "A constant branches are simplified" do
-    Exalted::Ast.simplify(@nested).should == Exalted::Ast.new(['mul', Exalted::Ast.new(['num', 10]), @sub_foo])
+    Exalted::Ast.simplify(@nested).should == Exalted::Ast.new('mul', Exalted::Ast.new('num', 10), @sub_foo)
   end
 end
 

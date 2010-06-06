@@ -5,8 +5,14 @@ module Exalted
     class UnknownNodeError < ArgumentError
       def initialize(type)
         @message = "Unknown node type '#{type}'"
+        puts @message
       end
     end
+
+    def initialize(*args)
+      super(args)
+    end
+
 
     def constant?
       case self[0]
@@ -74,11 +80,11 @@ module Exalted
 
     def self.simplify(ast)
       if ast.constant?
-        new(['num', value(ast)])
+        new('num', value(ast))
       else
         case ast[0]
         when 'add', 'sub', 'mul', 'div'
-           new([ast[0], simplify(ast[1]), simplify(ast[2])])
+           new(ast[0], simplify(ast[1]), simplify(ast[2]))
         else
           ast
         end
@@ -88,11 +94,11 @@ module Exalted
     def self.from_array(array)
       case array[0]
       when 'mul', 'div', 'add', 'sub'
-        new([array[0], from_array(array[1]), from_array(array[2]) ] )
+        new(array[0], from_array(array[1]), from_array(array[2])  )
       when 'num', 'stat', 'spec'
-        new([array[0], array[1]])
+        new(array[0], array[1])
       when 'max', 'min'
-        new([array[0], array[1], array[2].map! { |ast| new(ast) } ])
+        new(array[0], array[1], array[2].map! { |ast| new(ast) } )
       else
         raise UnknownNodeError, self[0]
       end
