@@ -22,6 +22,8 @@ describe "Exalted::Ast" do
     @mul_foo  = Exalted::Ast.new('mul', @three, @foo)
     @div_foo  = Exalted::Ast.new('div', @three, @foo)
     @nested   = Exalted::Ast.new('mul', @add, @sub_foo)
+    @min      = Exalted::Ast.new('min', 1, [@three, @seven] )
+    @max      = Exalted::Ast.new('max', 1, [@three, @seven] )
     @context  = { 'foo' => 3, 'bar' => 4 }
   end
 
@@ -53,6 +55,14 @@ describe "Exalted::Ast" do
     @div.should == Ast.div(@seven, @three)
   end
 
+  it ".min makes a min" do
+    @min.should == Ast.min(1, [@three, @seven])
+  end
+
+  it ".max makes a max" do
+    @max.should == Ast.max(1, [@three, @seven])
+  end
+
   it "a number is constant" do
     @three.should.be.constant
   end
@@ -72,6 +82,12 @@ describe "Exalted::Ast" do
   end
   it "an div of two constants is constant" do
     @div.should.be.constant
+  end
+  it "a min of constants is constant" do
+    @min.should.be.constant
+  end
+  it "a max of constants is constant" do
+    @max.should.be.constant
   end
 
   it "an add of constant and not constant is not constant" do
@@ -152,6 +168,13 @@ describe "Exalted::Ast" do
 
   it "the value of a div is the first child divided by the second" do
     Exalted::Ast.value(@div, @context).should == 2
+  end
+
+  it "the value of a min is the mininum value" do
+    Exalted::Ast.value(@min, @context).should == 3
+  end
+  it "the value of a max is the maxinum value" do
+    Exalted::Ast.value(@max, @context).should == 7
   end
 
   it "it walks the whole tree to compute a value" do

@@ -28,7 +28,7 @@ module Exalted
         true
       when 'stat', 'spec'
         false
-      when 'max'
+      when 'max', 'min'
         self[2].all? { |ast| ast.constant? }
       else
         raise UnknownNodeError, self[0]

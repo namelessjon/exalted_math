@@ -17,7 +17,9 @@ describe "Exalted::MathParser" do
     ['3 + 4', Ast.add(Ast.num(3), Ast.num(4) )],
     ['6 / 3', Ast.div(Ast.num(6), Ast.num(3) )],
     ['Essence * 4', Ast.mul(Ast.stat('essence'), Ast.num(4) )],
-    ['(Essence * 4) + Willpower', Ast.add(Ast.mul(Ast.stat('essence'), Ast.num(4) ), Ast.stat('willpower'))]
+    ['(Essence * 4) + Willpower', Ast.add(Ast.mul(Ast.stat('essence'), Ast.num(4) ), Ast.stat('willpower'))],
+    ['highest[2](compassion,conviction,temperance,valor)', Ast.max(2, [Ast.stat('compassion'),Ast.stat('conviction'),Ast.stat('temperance'),Ast.stat('valor') ])],
+    ['min(compassion,conviction,temperance,valor)', Ast.min(1, [Ast.stat('compassion'),Ast.stat('conviction'),Ast.stat('temperance'),Ast.stat('valor') ])]
   ].each do |string, ast|
     it "parses '#{string}'" do
       success, result = @parser.ast(string)
