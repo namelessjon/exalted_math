@@ -1,0 +1,51 @@
+= Exalted Math Parser
+
+This is a very simple project both to teach myself to use Treetop, and to
+implement simple (or not so simple) parsing of mathematics for Exalted character
+sheets.  Although I'm sure it could be used for other simple math situations.
+It consists of two parts; parser and abstract syntax tree.  The parser
+constructs the abstract syntax tree as it parses the input string.  The AST can
+then be used to compute the value of the expression with a given context.  The
+AST also has a simple method to simplify it if possible.  The AST is based on an
+array class, which makes it very easy to serialize.
+
+== Examples
+
+    @parser = Exalted::MathsParser.new
+
+    # simple maths
+    # The ast method results a two-tuple.
+    # The first value is the success or failure of the parse
+    # The second value is the AST, or failure message if it failed
+    @parser.ast('3 + 4')
+    #=> true, simple_ast
+
+    # symbolic values
+    @parser.ast('Essence * 4')
+    #=> true, symbolic_ast
+
+    # complex maths
+    @parser.ast('(Essence * 4) + Willpower + highest[2](Compassion,Conviction,Temperance,Valor)')
+    #=> true, complex_ast
+
+    # evaluate the Ast
+    Exalted::Ast.value(simple_ast)
+    #=> 7
+
+    # evaluate a more complex Ast
+    Exalted::Ast.value(symbolic_ast, {'essence' => 4})
+    #=> 16
+
+== Syntax
+
+The syntax supported by the parser is pretty simple.  In the examples above,
+almost all of it has been demonstrated.
+
+  [0-9]+::                  A number
+  [A-z]+::                  A stat.  This is looked up from the context.
+  spec:"..."::              A speciality. This is looked up from the context.
+  highest(list,...)::       Has the value of the highest component.
+  highest[n](list,...)::    Has the value of the highest n components.
+  lowest(list,...)::        Has the value of the lowest component.
+  lowest[2](list,...)::     Has the value of the lowest n componentd.
+
