@@ -47,7 +47,7 @@ module Exalted
       end
     end
 
-    def self.value(ast, context)
+    def self.value(ast, context={})
       case ast[0]
       when 'mul'
         value(ast[1], context) * value(ast[2], context)
@@ -69,6 +69,25 @@ module Exalted
         (tmp.size == 1) ? tmp.first : tmp.inject(0) { |fin, val| fin += val }
       else
         raise UnknownNodeError, self[0]
+      end
+    end
+
+    def self.simplify(ast)
+      if ast.constant?
+        new(['num', value(ast)])
+      else
+        case ast[0]
+        when 'add', 'sub', 'mul', 'div'
+          if ast[1].constant?
+            new([ast[0], new(['num', value(ast[1])]), ast[2]])
+          elsif ast[2].constant?
+            new([ast[0], ast[1], new(['num', value(ast[2])])])
+          else
+            simplify(ast)
+          end
+        else
+          ast
+        end
       end
     end
 
