@@ -78,13 +78,7 @@ module Exalted
       else
         case ast[0]
         when 'add', 'sub', 'mul', 'div'
-          if ast[1].constant?
-            new([ast[0], new(['num', value(ast[1])]), ast[2]])
-          elsif ast[2].constant?
-            new([ast[0], ast[1], new(['num', value(ast[2])])])
-          else
-            simplify(ast)
-          end
+           new([ast[0], simplify(ast[1]), simplify(ast[2])])
         else
           ast
         end
@@ -95,9 +89,9 @@ module Exalted
       case array[0]
       when 'mul', 'div', 'add', 'sub'
         new([array[0], from_array(array[1]), from_array(array[2]) ] )
-      when 'num', 'stat'
+      when 'num', 'stat', 'spec'
         new([array[0], array[1]])
-      when 'max'
+      when 'max', 'min'
         new([array[0], array[1], array[2].map! { |ast| new(ast) } ])
       else
         raise UnknownNodeError, self[0]
