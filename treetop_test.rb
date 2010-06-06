@@ -1,5 +1,6 @@
 #!/usr/bin/ruby
 # Jonathan D. Stott <jonathan.stott@gmail.com>
+$LOAD_PATH.unshift 'lib'
 require 'exalted_math'
 require 'pp'
 

@@ -1,8 +1,8 @@
 #!/usr/bin/ruby
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 require 'treetop'
-require 'Math'
-require 'exalted_ast'
+require 'exalted_math/math'
+require 'exalted_math/ast'
 
 module Exalted
   class MathsParser
