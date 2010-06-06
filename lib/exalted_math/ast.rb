@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 module Exalted
+  # Provides a simple AST for Exalted Maths
   class Ast < Array
     class UnknownNodeError < ArgumentError
       def initialize(type)
@@ -13,7 +14,12 @@ module Exalted
       super(args)
     end
 
-
+    # Is this AST constant?
+    #
+    # If an AST only has constant child nodes, it is constant.
+    # This allows some simplification.
+    #
+    # @return [Boolean] is the AST constant
     def constant?
       case self[0]
       when 'mul', 'div', 'add', 'sub'
@@ -29,10 +35,27 @@ module Exalted
       end
     end
 
+    # Is the given AST constant?
+    #
+    # If an AST only has constant child nodes, it is constant.
+    # This allows some simplification.
+    #
+    # @param ast [Ast] An Ast
+    #
+    # @return [Boolean] is the AST constant
     def self.constant?(ast)
       ast.constant?
     end
 
+    # Is the given AST valid?
+    #
+    # Does the context provide all the values the AST is looking for?
+    #
+    # @param ast [Ast] The Ast to test
+    # @param valid_values [Array] Array of valid values, the keys of the context
+    # @param errors [Array] Optional array of errors
+    #
+    # @return [Boolean] True if valid, false if not.
     def self.valid?(ast, valid_values, errors=[])
       case ast[0]
       when 'mul', 'div', 'add', 'sub'
@@ -53,6 +76,14 @@ module Exalted
       end
     end
 
+    # Calculate the value of the AST for the given context
+    #
+    # This method recursively walks the AST, calculating the final value
+    #
+    # @param ast [Ast] The AST to compute
+    # @param context [#[]] Context used to evaluate the AST
+    #
+    # @return [Integer] The value of the AST
     def self.value(ast, context={})
       case ast[0]
       when 'mul'
@@ -78,6 +109,13 @@ module Exalted
       end
     end
 
+    # Simplify the AST
+    #
+    # This recusively walks the AST, replacing any constant subtrees with their
+    # value.
+    #
+    # @param ast [Ast] The AST to simplify
+    # @return [Ast] The simplified AST
     def self.simplify(ast)
       if ast.constant?
         new('num', value(ast))
