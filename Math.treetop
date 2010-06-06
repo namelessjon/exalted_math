@@ -39,16 +39,11 @@ grammar ExaltedMaths
   end
 
   rule spec
-    [Ss] 'pec' 'iality'? ':"' speciality '"' {
+    [Ss] 'pec' 'iality'? ':"' speciality:[^"]+ '"' {
         def value
-          puts speciality.text_value
           1
         end
     }
-  end
-
-  rule speciality
-    [^"]+
   end
 
   rule max
