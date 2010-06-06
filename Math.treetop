@@ -47,9 +47,17 @@ grammar ExaltedMaths
   end
 
   rule max
-    'max' ( '[' number ']' )?  '(' space* list space*  ')' {
+    ( 'max' / 'highest' ) num:(  '[' number ']' )?  '(' space* list space*  ')' {
        def value
-           list.values.max
+         list.values.sort[-count, count].inject(0) { |fin, val| fin += val }
+       end
+
+       def count
+         if num.elements
+           num.elements.detect { |e| e.respond_to?(:value) }.value
+         else
+           1
+         end
        end
     }
   end
