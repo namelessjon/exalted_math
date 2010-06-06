@@ -21,7 +21,7 @@ module Maths
 
   module Additive1
     def ast
-      Ast.new('add', multitive.ast, additive.ast )
+      Ast.add(multitive.ast, additive.ast )
     end
   end
 
@@ -37,7 +37,7 @@ module Maths
 
   module Additive3
     def ast
-      Ast.new('sub', multitive.ast, additive.ast )
+      Ast.sub( multitive.ast, additive.ast )
     end
   end
 
@@ -188,7 +188,7 @@ module Maths
 
   module Multitive1
     def ast
-      Ast.new('mul', primary.ast, multitive.ast )
+      Ast.mul(primary.ast, multitive.ast )
     end
   end
 
@@ -204,7 +204,7 @@ module Maths
 
   module Multitive3
     def ast
-      Ast.new('div', primary.ast, multitive.ast )
+      Ast.div( primary.ast, multitive.ast )
     end
   end
 
@@ -475,7 +475,7 @@ module Maths
     end
 
     def ast
-      Ast.new('spec', value)
+      Ast.spec(value)
     end
   end
 
@@ -608,7 +608,7 @@ module Maths
     end
 
     def ast
-      Ast.new('max', count, list.asts )
+      Ast.max( count, list.asts )
     end
   end
 
@@ -779,7 +779,7 @@ module Maths
       end
     end
     def ast
-      Ast.new('min', count, list.asts )
+      Ast.min( count, list.asts )
     end
   end
 
@@ -1140,7 +1140,7 @@ module Maths
       (negative.elements) ? -1 : 1
     end
     def ast
-      Ast.new('num', value)
+      Ast.num(value)
     end
   end
 
@@ -1215,7 +1215,7 @@ module Maths
       text_value.downcase
     end
     def ast
-      Ast.new('stat', value)
+      Ast.stat(value)
     end
   end
 
