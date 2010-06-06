@@ -83,7 +83,7 @@ grammar Maths
   end
 
   rule list
-    ( ( number / stat ) space* ',' space* )* space* ( number / stat ) {
+    ( number / stat ) ( space* ',' space* ( number / stat ) )*   {
         def dig(values, elements)
           elements.each do |elem|
             values << elem if elem.respond_to?(:value)
