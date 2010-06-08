@@ -2,12 +2,12 @@ module Exalted
 grammar Maths
 
   rule additive
-    multitive space* '+' space* additive {
+    multitive  '+' space  additive {
       def ast
         Ast.add(multitive.ast, additive.ast )
       end
    }
-  / multitive space* '-' space* additive {
+  / multitive  '-' space additive {
     def ast
       Ast.sub( multitive.ast, additive.ast )
     end
@@ -16,13 +16,13 @@ grammar Maths
   end
 
   rule multitive
-    primary space* '*' space* multitive {
+    primary '*' space multitive {
        def ast
          Ast.mul(primary.ast, multitive.ast )
        end
     }
     /
-    primary space* '/' space* multitive {
+    primary '/' space multitive {
        def ast
          Ast.div( primary.ast, multitive.ast )
        end
@@ -31,7 +31,7 @@ grammar Maths
   end
 
   rule primary
-    '(' space* additive space* ')' {
+    '(' space additive ')' space {
         def ast
           additive.ast
         end
@@ -40,7 +40,7 @@ grammar Maths
   end
 
   rule spec
-    [Ss] 'pec' 'iality'? ':"' speciality:[^"]+ '"' {
+    [Ss] 'pec' 'iality'? ':"' speciality:[^"]+ '"' space {
       def value
         speciality.text_value
       end
@@ -52,7 +52,7 @@ grammar Maths
   end
 
   rule max
-    ( 'max' / 'highest' ) num:(  '[' number ']' )?  '(' space* list space*  ')' {
+    ( 'max' / 'highest' ) num:(  '[' number ']' )?  '('  list   ')' {
        def count
          if num.elements
            num.elements.detect { |e| e.respond_to?(:value) }.value
@@ -68,7 +68,7 @@ grammar Maths
   end
 
   rule min
-    ( 'min' / 'lowest' ) num:(  '[' number ']' )?  '(' space* list space*  ')' {
+    ( 'min' / 'lowest' ) num:(  '[' number ']' )?  '('  list   ')' {
        def count
          if num.elements
            num.elements.detect { |e| e.respond_to?(:value) }.value
@@ -83,7 +83,7 @@ grammar Maths
   end
 
   rule list
-    ( number / stat ) ( space* ',' space* ( number / stat ) )*   {
+    space ( number / stat ) (  ',' space  ( number / stat ) )*   {
         def dig(values, elements)
           elements.each do |elem|
             values << elem if elem.respond_to?(:value)
@@ -101,11 +101,11 @@ grammar Maths
   end
 
   rule space
-    ( " " / "\t" )+
+    ( " " / "\t" )*
   end
 
   rule number
-    negative:('-')? [1-9] [0-9]* {
+    negative:('-')? [1-9] [0-9]* space {
         def value
           text_value.to_i*neg
         end
@@ -120,9 +120,9 @@ grammar Maths
   end
 
   rule stat
-    [A-Za-z]+ {
+    statistic:[A-Za-z]+ space {
         def value
-          text_value.downcase
+          statistic.text_value.downcase
         end
         def ast
           Ast.stat(value)

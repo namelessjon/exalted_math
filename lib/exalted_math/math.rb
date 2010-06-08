@@ -14,8 +14,12 @@ module Maths
       elements[0]
     end
 
+    def space
+      elements[2]
+    end
+
     def additive
-      elements[4]
+      elements[3]
     end
   end
 
@@ -30,8 +34,12 @@ module Maths
       elements[0]
     end
 
+    def space
+      elements[2]
+    end
+
     def additive
-      elements[4]
+      elements[3]
     end
   end
 
@@ -57,42 +65,20 @@ module Maths
     r2 = _nt_multitive
     s1 << r2
     if r2
-      s3, i3 = [], index
-      loop do
-        r4 = _nt_space
-        if r4
-          s3 << r4
-        else
-          break
-        end
+      if has_terminal?('+', false, index)
+        r3 = instantiate_node(SyntaxNode,input, index...(index + 1))
+        @index += 1
+      else
+        terminal_parse_failure('+')
+        r3 = nil
       end
-      r3 = instantiate_node(SyntaxNode,input, i3...index, s3)
       s1 << r3
       if r3
-        if has_terminal?('+', false, index)
-          r5 = instantiate_node(SyntaxNode,input, index...(index + 1))
-          @index += 1
-        else
-          terminal_parse_failure('+')
-          r5 = nil
-        end
-        s1 << r5
-        if r5
-          s6, i6 = [], index
-          loop do
-            r7 = _nt_space
-            if r7
-              s6 << r7
-            else
-              break
-            end
-          end
-          r6 = instantiate_node(SyntaxNode,input, i6...index, s6)
-          s1 << r6
-          if r6
-            r8 = _nt_additive
-            s1 << r8
-          end
+        r4 = _nt_space
+        s1 << r4
+        if r4
+          r5 = _nt_additive
+          s1 << r5
         end
       end
     end
@@ -107,63 +93,41 @@ module Maths
     if r1
       r0 = r1
     else
-      i9, s9 = index, []
-      r10 = _nt_multitive
-      s9 << r10
-      if r10
-        s11, i11 = [], index
-        loop do
-          r12 = _nt_space
-          if r12
-            s11 << r12
-          else
-            break
+      i6, s6 = index, []
+      r7 = _nt_multitive
+      s6 << r7
+      if r7
+        if has_terminal?('-', false, index)
+          r8 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
+        else
+          terminal_parse_failure('-')
+          r8 = nil
+        end
+        s6 << r8
+        if r8
+          r9 = _nt_space
+          s6 << r9
+          if r9
+            r10 = _nt_additive
+            s6 << r10
           end
         end
-        r11 = instantiate_node(SyntaxNode,input, i11...index, s11)
-        s9 << r11
+      end
+      if s6.last
+        r6 = instantiate_node(SyntaxNode,input, i6...index, s6)
+        r6.extend(Additive2)
+        r6.extend(Additive3)
+      else
+        @index = i6
+        r6 = nil
+      end
+      if r6
+        r0 = r6
+      else
+        r11 = _nt_multitive
         if r11
-          if has_terminal?('-', false, index)
-            r13 = instantiate_node(SyntaxNode,input, index...(index + 1))
-            @index += 1
-          else
-            terminal_parse_failure('-')
-            r13 = nil
-          end
-          s9 << r13
-          if r13
-            s14, i14 = [], index
-            loop do
-              r15 = _nt_space
-              if r15
-                s14 << r15
-              else
-                break
-              end
-            end
-            r14 = instantiate_node(SyntaxNode,input, i14...index, s14)
-            s9 << r14
-            if r14
-              r16 = _nt_additive
-              s9 << r16
-            end
-          end
-        end
-      end
-      if s9.last
-        r9 = instantiate_node(SyntaxNode,input, i9...index, s9)
-        r9.extend(Additive2)
-        r9.extend(Additive3)
-      else
-        @index = i9
-        r9 = nil
-      end
-      if r9
-        r0 = r9
-      else
-        r17 = _nt_multitive
-        if r17
-          r0 = r17
+          r0 = r11
         else
           @index = i0
           r0 = nil
@@ -181,8 +145,12 @@ module Maths
       elements[0]
     end
 
+    def space
+      elements[2]
+    end
+
     def multitive
-      elements[4]
+      elements[3]
     end
   end
 
@@ -197,8 +165,12 @@ module Maths
       elements[0]
     end
 
+    def space
+      elements[2]
+    end
+
     def multitive
-      elements[4]
+      elements[3]
     end
   end
 
@@ -224,42 +196,20 @@ module Maths
     r2 = _nt_primary
     s1 << r2
     if r2
-      s3, i3 = [], index
-      loop do
-        r4 = _nt_space
-        if r4
-          s3 << r4
-        else
-          break
-        end
+      if has_terminal?('*', false, index)
+        r3 = instantiate_node(SyntaxNode,input, index...(index + 1))
+        @index += 1
+      else
+        terminal_parse_failure('*')
+        r3 = nil
       end
-      r3 = instantiate_node(SyntaxNode,input, i3...index, s3)
       s1 << r3
       if r3
-        if has_terminal?('*', false, index)
-          r5 = instantiate_node(SyntaxNode,input, index...(index + 1))
-          @index += 1
-        else
-          terminal_parse_failure('*')
-          r5 = nil
-        end
-        s1 << r5
-        if r5
-          s6, i6 = [], index
-          loop do
-            r7 = _nt_space
-            if r7
-              s6 << r7
-            else
-              break
-            end
-          end
-          r6 = instantiate_node(SyntaxNode,input, i6...index, s6)
-          s1 << r6
-          if r6
-            r8 = _nt_multitive
-            s1 << r8
-          end
+        r4 = _nt_space
+        s1 << r4
+        if r4
+          r5 = _nt_multitive
+          s1 << r5
         end
       end
     end
@@ -274,63 +224,41 @@ module Maths
     if r1
       r0 = r1
     else
-      i9, s9 = index, []
-      r10 = _nt_primary
-      s9 << r10
-      if r10
-        s11, i11 = [], index
-        loop do
-          r12 = _nt_space
-          if r12
-            s11 << r12
-          else
-            break
+      i6, s6 = index, []
+      r7 = _nt_primary
+      s6 << r7
+      if r7
+        if has_terminal?('/', false, index)
+          r8 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
+        else
+          terminal_parse_failure('/')
+          r8 = nil
+        end
+        s6 << r8
+        if r8
+          r9 = _nt_space
+          s6 << r9
+          if r9
+            r10 = _nt_multitive
+            s6 << r10
           end
         end
-        r11 = instantiate_node(SyntaxNode,input, i11...index, s11)
-        s9 << r11
+      end
+      if s6.last
+        r6 = instantiate_node(SyntaxNode,input, i6...index, s6)
+        r6.extend(Multitive2)
+        r6.extend(Multitive3)
+      else
+        @index = i6
+        r6 = nil
+      end
+      if r6
+        r0 = r6
+      else
+        r11 = _nt_primary
         if r11
-          if has_terminal?('/', false, index)
-            r13 = instantiate_node(SyntaxNode,input, index...(index + 1))
-            @index += 1
-          else
-            terminal_parse_failure('/')
-            r13 = nil
-          end
-          s9 << r13
-          if r13
-            s14, i14 = [], index
-            loop do
-              r15 = _nt_space
-              if r15
-                s14 << r15
-              else
-                break
-              end
-            end
-            r14 = instantiate_node(SyntaxNode,input, i14...index, s14)
-            s9 << r14
-            if r14
-              r16 = _nt_multitive
-              s9 << r16
-            end
-          end
-        end
-      end
-      if s9.last
-        r9 = instantiate_node(SyntaxNode,input, i9...index, s9)
-        r9.extend(Multitive2)
-        r9.extend(Multitive3)
-      else
-        @index = i9
-        r9 = nil
-      end
-      if r9
-        r0 = r9
-      else
-        r17 = _nt_primary
-        if r17
-          r0 = r17
+          r0 = r11
         else
           @index = i0
           r0 = nil
@@ -344,10 +272,17 @@ module Maths
   end
 
   module Primary0
+    def space1
+      elements[1]
+    end
+
     def additive
       elements[2]
     end
 
+    def space2
+      elements[4]
+    end
   end
 
   module Primary1
@@ -378,41 +313,23 @@ module Maths
     end
     s1 << r2
     if r2
-      s3, i3 = [], index
-      loop do
-        r4 = _nt_space
-        if r4
-          s3 << r4
-        else
-          break
-        end
-      end
-      r3 = instantiate_node(SyntaxNode,input, i3...index, s3)
+      r3 = _nt_space
       s1 << r3
       if r3
-        r5 = _nt_additive
-        s1 << r5
-        if r5
-          s6, i6 = [], index
-          loop do
-            r7 = _nt_space
-            if r7
-              s6 << r7
-            else
-              break
-            end
+        r4 = _nt_additive
+        s1 << r4
+        if r4
+          if has_terminal?(')', false, index)
+            r5 = instantiate_node(SyntaxNode,input, index...(index + 1))
+            @index += 1
+          else
+            terminal_parse_failure(')')
+            r5 = nil
           end
-          r6 = instantiate_node(SyntaxNode,input, i6...index, s6)
-          s1 << r6
-          if r6
-            if has_terminal?(')', false, index)
-              r8 = instantiate_node(SyntaxNode,input, index...(index + 1))
-              @index += 1
-            else
-              terminal_parse_failure(')')
-              r8 = nil
-            end
-            s1 << r8
+          s1 << r5
+          if r5
+            r6 = _nt_space
+            s1 << r6
           end
         end
       end
@@ -428,25 +345,25 @@ module Maths
     if r1
       r0 = r1
     else
-      r9 = _nt_number
-      if r9
-        r0 = r9
+      r7 = _nt_number
+      if r7
+        r0 = r7
       else
-        r10 = _nt_spec
-        if r10
-          r0 = r10
+        r8 = _nt_spec
+        if r8
+          r0 = r8
         else
-          r11 = _nt_max
-          if r11
-            r0 = r11
+          r9 = _nt_max
+          if r9
+            r0 = r9
           else
-            r12 = _nt_min
-            if r12
-              r0 = r12
+            r10 = _nt_min
+            if r10
+              r0 = r10
             else
-              r13 = _nt_stat
-              if r13
-                r0 = r13
+              r11 = _nt_stat
+              if r11
+                r0 = r11
               else
                 @index = i0
                 r0 = nil
@@ -467,6 +384,9 @@ module Maths
       elements[4]
     end
 
+    def space
+      elements[6]
+    end
   end
 
   module Spec1
@@ -561,6 +481,10 @@ module Maths
                 r8 = nil
               end
               s0 << r8
+              if r8
+                r9 = _nt_space
+                s0 << r9
+              end
             end
           end
         end
@@ -593,7 +517,7 @@ module Maths
     end
 
     def list
-      elements[4]
+      elements[3]
     end
 
   end
@@ -697,43 +621,17 @@ module Maths
         end
         s0 << r9
         if r9
-          s10, i10 = [], index
-          loop do
-            r11 = _nt_space
-            if r11
-              s10 << r11
-            else
-              break
-            end
-          end
-          r10 = instantiate_node(SyntaxNode,input, i10...index, s10)
+          r10 = _nt_list
           s0 << r10
           if r10
-            r12 = _nt_list
-            s0 << r12
-            if r12
-              s13, i13 = [], index
-              loop do
-                r14 = _nt_space
-                if r14
-                  s13 << r14
-                else
-                  break
-                end
-              end
-              r13 = instantiate_node(SyntaxNode,input, i13...index, s13)
-              s0 << r13
-              if r13
-                if has_terminal?(')', false, index)
-                  r15 = instantiate_node(SyntaxNode,input, index...(index + 1))
-                  @index += 1
-                else
-                  terminal_parse_failure(')')
-                  r15 = nil
-                end
-                s0 << r15
-              end
+            if has_terminal?(')', false, index)
+              r11 = instantiate_node(SyntaxNode,input, index...(index + 1))
+              @index += 1
+            else
+              terminal_parse_failure(')')
+              r11 = nil
             end
+            s0 << r11
           end
         end
       end
@@ -765,7 +663,7 @@ module Maths
     end
 
     def list
-      elements[4]
+      elements[3]
     end
 
   end
@@ -868,43 +766,17 @@ module Maths
         end
         s0 << r9
         if r9
-          s10, i10 = [], index
-          loop do
-            r11 = _nt_space
-            if r11
-              s10 << r11
-            else
-              break
-            end
-          end
-          r10 = instantiate_node(SyntaxNode,input, i10...index, s10)
+          r10 = _nt_list
           s0 << r10
           if r10
-            r12 = _nt_list
-            s0 << r12
-            if r12
-              s13, i13 = [], index
-              loop do
-                r14 = _nt_space
-                if r14
-                  s13 << r14
-                else
-                  break
-                end
-              end
-              r13 = instantiate_node(SyntaxNode,input, i13...index, s13)
-              s0 << r13
-              if r13
-                if has_terminal?(')', false, index)
-                  r15 = instantiate_node(SyntaxNode,input, index...(index + 1))
-                  @index += 1
-                else
-                  terminal_parse_failure(')')
-                  r15 = nil
-                end
-                s0 << r15
-              end
+            if has_terminal?(')', false, index)
+              r11 = instantiate_node(SyntaxNode,input, index...(index + 1))
+              @index += 1
+            else
+              terminal_parse_failure(')')
+              r11 = nil
             end
+            s0 << r11
           end
         end
       end
@@ -924,9 +796,17 @@ module Maths
   end
 
   module List0
+    def space
+      elements[1]
+    end
+
   end
 
   module List1
+    def space
+      elements[0]
+    end
+
   end
 
   module List2
@@ -957,89 +837,71 @@ module Maths
     end
 
     i0, s0 = index, []
-    i1 = index
-    r2 = _nt_number
-    if r2
-      r1 = r2
-    else
-      r3 = _nt_stat
-      if r3
-        r1 = r3
-      else
-        @index = i1
-        r1 = nil
-      end
-    end
+    r1 = _nt_space
     s0 << r1
     if r1
-      s4, i4 = [], index
-      loop do
-        i5, s5 = index, []
-        s6, i6 = [], index
+      i2 = index
+      r3 = _nt_number
+      if r3
+        r2 = r3
+      else
+        r4 = _nt_stat
+        if r4
+          r2 = r4
+        else
+          @index = i2
+          r2 = nil
+        end
+      end
+      s0 << r2
+      if r2
+        s5, i5 = [], index
         loop do
-          r7 = _nt_space
+          i6, s6 = index, []
+          if has_terminal?(',', false, index)
+            r7 = instantiate_node(SyntaxNode,input, index...(index + 1))
+            @index += 1
+          else
+            terminal_parse_failure(',')
+            r7 = nil
+          end
+          s6 << r7
           if r7
-            s6 << r7
+            r8 = _nt_space
+            s6 << r8
+            if r8
+              i9 = index
+              r10 = _nt_number
+              if r10
+                r9 = r10
+              else
+                r11 = _nt_stat
+                if r11
+                  r9 = r11
+                else
+                  @index = i9
+                  r9 = nil
+                end
+              end
+              s6 << r9
+            end
+          end
+          if s6.last
+            r6 = instantiate_node(SyntaxNode,input, i6...index, s6)
+            r6.extend(List0)
+          else
+            @index = i6
+            r6 = nil
+          end
+          if r6
+            s5 << r6
           else
             break
           end
         end
-        r6 = instantiate_node(SyntaxNode,input, i6...index, s6)
-        s5 << r6
-        if r6
-          if has_terminal?(',', false, index)
-            r8 = instantiate_node(SyntaxNode,input, index...(index + 1))
-            @index += 1
-          else
-            terminal_parse_failure(',')
-            r8 = nil
-          end
-          s5 << r8
-          if r8
-            s9, i9 = [], index
-            loop do
-              r10 = _nt_space
-              if r10
-                s9 << r10
-              else
-                break
-              end
-            end
-            r9 = instantiate_node(SyntaxNode,input, i9...index, s9)
-            s5 << r9
-            if r9
-              i11 = index
-              r12 = _nt_number
-              if r12
-                r11 = r12
-              else
-                r13 = _nt_stat
-                if r13
-                  r11 = r13
-                else
-                  @index = i11
-                  r11 = nil
-                end
-              end
-              s5 << r11
-            end
-          end
-        end
-        if s5.last
-          r5 = instantiate_node(SyntaxNode,input, i5...index, s5)
-          r5.extend(List0)
-        else
-          @index = i5
-          r5 = nil
-        end
-        if r5
-          s4 << r5
-        else
-          break
-        end
+        r5 = instantiate_node(SyntaxNode,input, i5...index, s5)
+        s0 << r5
       end
-      r4 = instantiate_node(SyntaxNode,input, i4...index, s4)
-      s0 << r4
     end
     if s0.last
       r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
@@ -1099,12 +961,7 @@ module Maths
         break
       end
     end
-    if s0.empty?
-      @index = i0
-      r0 = nil
-    else
-      r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
-    end
+    r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
 
     node_cache[:space][start_index] = r0
 
@@ -1116,6 +973,9 @@ module Maths
       elements[0]
     end
 
+    def space
+      elements[3]
+    end
   end
 
   module Number1
@@ -1181,6 +1041,10 @@ module Maths
         end
         r4 = instantiate_node(SyntaxNode,input, i4...index, s4)
         s0 << r4
+        if r4
+          r6 = _nt_space
+          s0 << r6
+        end
       end
     end
     if s0.last
@@ -1198,8 +1062,18 @@ module Maths
   end
 
   module Stat0
+    def statistic
+      elements[0]
+    end
+
+    def space
+      elements[1]
+    end
+  end
+
+  module Stat1
     def value
-      text_value.downcase
+      statistic.text_value.downcase
     end
     def ast
       Ast.stat(value)
@@ -1217,26 +1091,39 @@ module Maths
       return cached
     end
 
-    s0, i0 = [], index
+    i0, s0 = index, []
+    s1, i1 = [], index
     loop do
       if has_terminal?('\G[A-Za-z]', true, index)
-        r1 = true
+        r2 = true
         @index += 1
       else
-        r1 = nil
+        r2 = nil
       end
-      if r1
-        s0 << r1
+      if r2
+        s1 << r2
       else
         break
       end
     end
-    if s0.empty?
-      @index = i0
-      r0 = nil
+    if s1.empty?
+      @index = i1
+      r1 = nil
     else
+      r1 = instantiate_node(SyntaxNode,input, i1...index, s1)
+    end
+    s0 << r1
+    if r1
+      r3 = _nt_space
+      s0 << r3
+    end
+    if s0.last
       r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
       r0.extend(Stat0)
+      r0.extend(Stat1)
+    else
+      @index = i0
+      r0 = nil
     end
 
     node_cache[:stat][start_index] = r0

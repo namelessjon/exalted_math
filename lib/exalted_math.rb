@@ -7,7 +7,7 @@ require 'exalted_math/ast'
 module Exalted
   class MathsParser
     def ast(text)
-      result = parse(text)
+      result = parse(text.strip)
       if result
         [true, result.ast]
       else
