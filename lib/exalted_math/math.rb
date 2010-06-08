@@ -928,40 +928,18 @@ module Maths
       return cached
     end
 
-    s0, i0 = [], index
-    loop do
-      i1 = index
-      if has_terminal?(" ", false, index)
-        r2 = instantiate_node(SyntaxNode,input, index...(index + 1))
-        @index += 1
-      else
-        terminal_parse_failure(" ")
-        r2 = nil
-      end
-      if r2
-        r1 = r2
-      else
-        if has_terminal?("\t", false, index)
-          r3 = instantiate_node(SyntaxNode,input, index...(index + 1))
-          @index += 1
-        else
-          terminal_parse_failure("\t")
-          r3 = nil
-        end
-        if r3
-          r1 = r3
-        else
-          @index = i1
-          r1 = nil
-        end
-      end
-      if r1
-        s0 << r1
-      else
-        break
-      end
+    if has_terminal?(" ", false, index)
+      r1 = instantiate_node(SyntaxNode,input, index...(index + 1))
+      @index += 1
+    else
+      terminal_parse_failure(" ")
+      r1 = nil
     end
-    r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
+    if r1
+      r0 = r1
+    else
+      r0 = instantiate_node(SyntaxNode,input, index...index)
+    end
 
     node_cache[:space][start_index] = r0
 

@@ -7,7 +7,10 @@ require 'exalted_math/ast'
 module Exalted
   class MathsParser
     def ast(text)
-      result = parse(text.strip)
+      txt = text.dup
+      txt.strip!
+      txt.gsub!(/\s+/," ")
+      result = parse(txt)
       if result
         [true, result.ast]
       else

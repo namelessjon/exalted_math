@@ -101,7 +101,7 @@ grammar Maths
   end
 
   rule space
-    ( " " / "\t" )*
+    " "?
   end
 
   rule number

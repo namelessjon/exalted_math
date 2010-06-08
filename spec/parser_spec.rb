@@ -37,7 +37,7 @@ describe "Exalted::MathParser" do
   end
 
   it "Doesn't care about spaces" do
-    success, result = @parser.ast(' ( Essence * 4 ) + Willpower + highest[2]( compassion , conviction ) ')
+    success, result = @parser.ast(' ( Essence    * 4 )   +    Willpower + highest[2]( compassion , conviction ) ')
     raise ParserFailure, result unless success
     success.should.be.true
   end
