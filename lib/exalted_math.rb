@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 # Jonathan D. Stott <jonathan.stott@gmail.com>
-require 'treetop'
+require 'treetop/runtime'
 require 'exalted_math/math'
 require 'exalted_math/ast'
 
