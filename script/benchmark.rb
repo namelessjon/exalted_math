@@ -11,7 +11,7 @@ times = []
 5.times do
 start = Time.now
 10_000.times do
-  Exalted::MathsParser.new.ast(string)
+  ExaltedMath::MathsParser.new.ast(string)
 end
 end_time   = Time.now
 times << end_time - start
