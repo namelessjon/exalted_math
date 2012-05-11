@@ -4,12 +4,12 @@ grammar Maths
   rule additive
     multitive  '+' space  additive {
       def ast
-        AddNode.new(multitive.ast, additive.ast )
+        Node::Add.new(multitive.ast, additive.ast )
       end
    }
   / multitive  '-' space additive {
     def ast
-      SubtractNode.new( multitive.ast, additive.ast )
+      Node::Subtract.new( multitive.ast, additive.ast )
     end
   }
   / multitive
@@ -18,13 +18,13 @@ grammar Maths
   rule multitive
     primary '*' space multitive {
        def ast
-         MultiplyNode.new(primary.ast, multitive.ast )
+         Node::Multiply.new(primary.ast, multitive.ast )
        end
     }
     /
     primary '/' space multitive {
        def ast
-         MultiplyNode.new( primary.ast, multitive.ast )
+         Node::Divide.new( primary.ast, multitive.ast )
        end
     }
     / primary
@@ -46,7 +46,7 @@ grammar Maths
       end
 
       def ast
-        SpecNode.new(value)
+        Node::Spec.new(value)
       end
     }
   end
@@ -62,7 +62,7 @@ grammar Maths
        end
 
        def ast
-         MaximumNode.new(list.asts, count)
+         Node::Maximum.new(list.asts, count)
        end
     }
   end
@@ -77,7 +77,7 @@ grammar Maths
          end
        end
        def ast
-         MinimumNode.new(list.asts, count)
+         Node::Minimum.new(list.asts, count)
        end
     }
   end
@@ -114,7 +114,7 @@ grammar Maths
           (negative.elements) ? -1 : 1
         end
         def ast
-          NumberNode.new(value)
+          Node::Number.new(value)
         end
     }
   end
@@ -125,7 +125,7 @@ grammar Maths
           statistic.text_value.downcase
         end
         def ast
-          StatNode.new(value)
+          Node::Stat.new(value)
         end
     }
   end

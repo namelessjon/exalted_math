@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+require 'exalted_math/node/node'
+require 'exalted_math/node/number'
+require 'exalted_math/node/named'
+require 'exalted_math/node/operator'
+require 'exalted_math/node/add'
+require 'exalted_math/node/subtract'
+require 'exalted_math/node/divide'
+require 'exalted_math/node/multiply'
+require 'exalted_math/node/list'
+require 'exalted_math/node/maximum'
+require 'exalted_math/node/minimum'

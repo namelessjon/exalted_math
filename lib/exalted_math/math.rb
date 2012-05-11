@@ -25,7 +25,7 @@ module Maths
 
   module Additive1
     def ast
-      AddNode.new(multitive.ast, additive.ast )
+      Node::Add.new(multitive.ast, additive.ast )
     end
   end
 
@@ -45,7 +45,7 @@ module Maths
 
   module Additive3
     def ast
-      SubtractNode.new( multitive.ast, additive.ast )
+      Node::Subtract.new( multitive.ast, additive.ast )
     end
   end
 
@@ -156,7 +156,7 @@ module Maths
 
   module Multitive1
     def ast
-      MultiplyNode.new(primary.ast, multitive.ast )
+      Node::Multiply.new(primary.ast, multitive.ast )
     end
   end
 
@@ -176,7 +176,7 @@ module Maths
 
   module Multitive3
     def ast
-      MultiplyNode.new( primary.ast, multitive.ast )
+      Node::Divide.new( primary.ast, multitive.ast )
     end
   end
 
@@ -395,7 +395,7 @@ module Maths
     end
 
     def ast
-      SpecNode.new(value)
+      Node::Spec.new(value)
     end
   end
 
@@ -532,7 +532,7 @@ module Maths
     end
 
     def ast
-      MaximumNode.new(list.asts, count)
+      Node::Maximum.new(list.asts, count)
     end
   end
 
@@ -677,7 +677,7 @@ module Maths
       end
     end
     def ast
-      MinimumNode.new(list.asts, count)
+      Node::Minimum.new(list.asts, count)
     end
   end
 
@@ -965,7 +965,7 @@ module Maths
       (negative.elements) ? -1 : 1
     end
     def ast
-      NumberNode.new(value)
+      Node::Number.new(value)
     end
   end
 
@@ -1054,7 +1054,7 @@ module Maths
       statistic.text_value.downcase
     end
     def ast
-      StatNode.new(value)
+      Node::Stat.new(value)
     end
   end
 

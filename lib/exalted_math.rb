@@ -2,9 +2,12 @@
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 require 'treetop/runtime'
 require 'exalted_math/math'
-require 'exalted_math/ast'
+require 'exalted_math/node'
 
-module Exalted
+module ExaltedMath
+
+  class ContextError < StandardError; end
+  class ParseFailedError < StandardError; end
   class MathsParser
     def ast(text)
       txt = text.dup
@@ -12,9 +15,9 @@ module Exalted
       txt.gsub!(/\s+/," ")
       result = parse(txt)
       if result
-        [true, result.ast]
+        result.ast
       else
-        [false, failure_reason]
+        raise ParseFailedError, failure_reason
       end
     end
   end
