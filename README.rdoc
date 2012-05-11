@@ -5,35 +5,33 @@ implement simple (or not so simple) parsing of mathematics for Exalted character
 sheets.  Although I'm sure it could be used for other simple math situations.
 It consists of two parts; parser and abstract syntax tree.  The parser
 constructs the abstract syntax tree as it parses the input string.  The AST can
-then be used to compute the value of the expression with a given context.  The
-AST also has a simple method to simplify it if possible.  The AST is based on an
-array class, which makes it very easy to serialize.
+then be used to compute the value of the expression with a given context.
+The AST can also simply itself, factoring out constant operations in some cases.
 
 == Examples
 
-    @parser = Exalted::MathsParser.new
+    @parser = ExaltedMath::MathsParser.new
 
     # simple maths
-    # The ast method results a two-tuple.
-    # The first value is the success or failure of the parse
-    # The second value is the AST, or failure message if it failed
+    # The parser returns the AST
+    # it raises a ParseFailedError in the case of error
     @parser.ast('3 + 4')
-    #=> true, simple_ast
+    #=> simple_ast
 
     # symbolic values
     @parser.ast('Essence * 4')
-    #=> true, symbolic_ast
+    #=> symbolic_ast
 
     # complex maths
     @parser.ast('(Essence * 4) + Willpower + highest[2](Compassion,Conviction,Temperance,Valor)')
-    #=> true, complex_ast
+    #=> complex_ast
 
     # evaluate the Ast
-    Exalted::Ast.value(simple_ast)
+    simple_ast.value
     #=> 7
 
     # evaluate a more complex Ast
-    Exalted::Ast.value(symbolic_ast, {'essence' => 4})
+    symbolic_ast.value({'essence' => 4})
     #=> 16
 
 == Syntax
