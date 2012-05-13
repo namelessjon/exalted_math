@@ -5,6 +5,12 @@ require 'exalted_math/node'
 
 include ExaltedMath
 
+class Context
+  attr_reader :foo
+  def initialize(foo)
+    @foo = foo
+  end
+end
 
 describe "ExaltedMath::Node" do
   before do
@@ -25,6 +31,7 @@ describe "ExaltedMath::Node" do
     @min      = Node::Minimum.new([@three, @seven], 1)
     @max      = Node::Maximum.new([@three, @seven], 1 )
     @context  = { 'foo' => 3, 'bar' => 4 }
+    @class_context  = Context.new(3)
   end
   it "a number is constant" do
     @three.should.be.constant
@@ -115,6 +122,14 @@ describe "ExaltedMath::Node" do
   it "the value of a stat is looked up in the context" do
     @foo.value(@context).should == @context['foo']
     @bar.value(@context).should == @context['bar']
+  end
+
+  it "allows the use of an object in the context" do
+    @foo.value(@class_context).should == @class_context.foo
+  end
+
+  it "raises an error on a missing context" do
+    lambda { @bar.value(@class_context) }.should.raise(ExaltedMath::ContextError)
   end
 
   it "the value of an add is the sum of the two children" do

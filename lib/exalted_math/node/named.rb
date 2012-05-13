@@ -13,7 +13,13 @@ module ExaltedMath
       end
 
       def value(context={})
-        context.fetch(name) { raise ContextError, name }
+        if context.respond_to?(:fetch)
+          context.fetch(name) { raise ContextError, name }
+        elsif context.respond_to?(name)
+          context.public_send(name)
+        else
+          raise ContextError, name
+        end
       end
 
       def ==(o)
