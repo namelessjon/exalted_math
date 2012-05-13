@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "exalted_math"
-  s.version = "0.2.1"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jonathan Stott"]
-  s.date = "2012-05-11"
+  s.date = "2012-05-13"
   s.description = "Parsing and evaluation of simple maths expressions for Exalted\n\nThis intended to aid in evaluating simple calculations which appear on character sheets, especially for Exalted."
   s.email = "jonathan.stott@gmail.com"
   s.extra_rdoc_files = [
