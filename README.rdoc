@@ -39,11 +39,11 @@ The AST can also simply itself, factoring out constant operations in some cases.
 The syntax supported by the parser is pretty simple.  In the examples above,
 almost all of it has been demonstrated.
 
-[[0-9]+]                        A number
-[[A-Za-z]+]                     A stat.  This is looked up from the context.
-[spec:"..."]                    A speciality. This is looked up from the context.
-[highest(stat|number,...)]      Has the value of the highest component.
-[highest[n](stat|number,...)]   Has the value of the highest n components.
-[lowest(stat|number,...)]       Has the value of the lowest component.
-[lowest[2](stat|number,...)]    Has the value of the lowest n components.
+[<tt>[0-9]+</tt>]                        A number
+[<tt>[A-Za-z]+</tt>]                     A stat.  This is looked up from the context.
+[<tt>spec:"..."</tt>]                    A speciality. This is looked up from the context.
+[<tt>highest(stat|number,...)</tt>]      Has the value of the highest component.
+[<tt>highest[n](stat|number,...)</tt>]   Has the value of the highest n components.
+[<tt>lowest(stat|number,...)</tt>]       Has the value of the lowest component.
+[<tt>lowest[n](stat|number,...)</tt>]    Has the value of the lowest n components.
 
